@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:VirtualCoffeeMachine.App.Controls;assembly=VirtualCoffeeMachine.App"
+             x:Class="VirtualCoffeeMachine.App.MainPage"
+             Padding="20">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ListView ItemsSource="{Binding Coffees}" SelectedItem="{Binding SelectedCoffee, Mode=TwoWay}" HasUnevenRows="True" VerticalOptions="StartAndExpand" >
+                <ListView.Header>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                            <Image Source="coffee.png" Aspect="AspectFit" />
+                            <Label Text="Choose your coffee" FontSize="Large" VerticalOptions="Center" />
+                        </StackLayout>
+                        <ctrl:Line />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding ImageSource}" Aspect="AspectFit" />
+                                <Label Grid.Column="1" Text="{Binding Name}" FontSize="Large" VerticalOptions="CenterAndExpand" />
+                                <Label Grid.Column="2" Text="{Binding Price, StringFormat='${0:N2}'}" FontSize="Large" HorizontalOptions="End" />
+                                <Label Grid.Row="1" Grid.ColumnSpan="3" Text="{Binding Description}" FontSize="Small" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Grid.Row="1" VerticalOptions="End">
+                <ctrl:Line />
+                <Label Text="{Binding TotalPayment, StringFormat='Total cash ${0:N2}'}" FontSize="Large" HorizontalOptions="Center" Margin="0,10,0,10"/>
+                <ctrl:Line />
+                <ctrl:Button Text="Add coins" Image="coin.png" Command="{Binding NavigateToAddCoinCommand}" />
+                <ctrl:Button Text="Get your coffee" Image="coffee_small.png" Command="{Binding ConfirmOrderCommand}" />
+                <ctrl:Button Text="Changed my mind" Image="cancel.png" Command="{Binding CancelOrderCommand}" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

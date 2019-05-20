@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:VirtualCoffeeMachine.App.Controls;assembly=VirtualCoffeeMachine.App"
+             x:Class="VirtualCoffeeMachine.App.CoffeeDone"
+             Padding="20">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <ListView ItemsSource="{Binding Change}">
+                <ListView.Header>
+                    <StackLayout>
+                        <StackLayout IsVisible="{Binding IsCoffeeSelected}">
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                <Image Source="{Binding Path=SelectedCoffee.ImageSource}" Aspect="AspectFit" />
+                                <Label Text="{Binding Path=SelectedCoffee.Name, StringFormat='Your {0} is hot and ready. Enjoy!'}" FontSize="Large" VerticalOptions="Center" />
+                            </StackLayout>
+                            <ctrl:Line />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" IsVisible="{Binding HasChange}">
+                            <Image Source="coin.png" Aspect="AspectFit" />
+                            <Label Text="{Binding TotalChange, StringFormat='Here is your change ${0:N2}'}" FontSize="Large" VerticalOptions="Center" />
+                        </StackLayout>
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding QuantityAvailable, StringFormat='{0:N0} X '}" FontSize="Large" />
+                                <Label Text="{Binding Value, StringFormat='${0:N2}'}" FontSize="Large" HorizontalOptions="End" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Grid.Row="1">
+                <ctrl:Line />
+                <ctrl:Button Text="More coffee?" Image="coffee_small.png" Command="{Binding NewOrderCommand}" FontSize="Large" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

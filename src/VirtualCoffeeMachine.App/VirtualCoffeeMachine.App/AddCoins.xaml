@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ctrl="clr-namespace:VirtualCoffeeMachine.App.Controls;assembly=VirtualCoffeeMachine.App"
+             x:Class="VirtualCoffeeMachine.App.AddCoins"
+             x:Name="AddCoins"
+             Padding="20">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <ListView ItemsSource="{Binding Register}" VerticalOptions="FillAndExpand">
+                <ListView.Header>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                            <Image Source="coin.png" Aspect="AspectFit" />
+                            <Label Text="Click the buttons bellow to add your coins" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </StackLayout>
+                        <ctrl:Line />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ctrl:Button Text="{Binding Name}" Command="{Binding Source={x:Reference AddCoins}, Path=BindingContext.AddCoinCommand}" CommandParameter="{Binding .}" />
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Grid.Row="1">
+                <ctrl:Line />
+                <Label Text="{Binding TotalPayment, StringFormat='Total cash ${0:N2}'}" FontSize="Large" HorizontalOptions="Center" Margin="0,10,0,10" />
+                <ctrl:Line />
+                <ctrl:Button Text="{Binding Path=SelectedCoffee.Name, StringFormat='Get your {0}'}" Image="{Binding Path=SelectedCoffee.ImageSource}" Command="{Binding ConfirmOrderCommand}" IsVisible="{Binding IsCoffeeSelected}" />
+                <ctrl:Button Text="Choose coffee" Image="coffee_small.png" Command="{Binding NavigateToMainCommand}" />
+                <ctrl:Button Text="Changed my mind" Image="cancel.png" Command="{Binding CancelOrderCommand}" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
