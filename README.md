@@ -1,4 +1,4 @@
-# VirtualCoffeeMachine-master
+# VirtualCoffeeMachine
 
 Sample code
 
